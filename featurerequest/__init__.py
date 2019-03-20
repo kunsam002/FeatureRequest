@@ -8,7 +8,6 @@ from sqlalchemy.pool import Pool
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-
 Base = declarative_base()
 
 # Logger
@@ -32,5 +31,5 @@ login_manager = app.login_manager
 # Authorization Principal
 principal = app.principal
 
-swaggerui_blueprint=app.swaggerui_blueprint
+swaggerui_blueprint = app.swaggerui_blueprint
 

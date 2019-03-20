@@ -36,58 +36,59 @@ def create_app(app_name, config_obj, api_prefix='/api/v1'):
     # Launching application
     app = Flask(app_name)  # So the engine would recognize the root package
 
-    # Load Configuration
-    app.config.from_object(config_obj)
+    with app.app_context():
+        # Load Configuration
+        app.config.from_object(config_obj)
 
-    # Loading assets
-    assets = Environment(app)
-    assets.from_yaml('assets.yaml')
-    app.assets = assets
+        # Loading assets
+        assets = Environment(app)
+        assets.from_yaml('assets.yaml')
+        app.assets = assets
 
-    # Initializing bcrypt password encryption
-    bcrypt = Bcrypt(app)
-    app.bcrypt = bcrypt
+        # Initializing bcrypt password encryption
+        bcrypt = Bcrypt(app)
+        app.bcrypt = bcrypt
 
-    # Initializing Database
-    db = SQLAlchemy(app)
-    app.db = db
+        # Initializing Database
+        db = SQLAlchemy(app)
+        app.db = db
 
-    # Initializing login manager
-    login_manager = LoginManager()
-    login_manager.login_view = app.config.get('LOGIN_VIEW', '.login')
+        # Initializing login manager
+        login_manager = LoginManager()
+        login_manager.login_view = app.config.get('LOGIN_VIEW', '.login')
 
-    login_manager.session_protection = 'strong'
-    login_manager.init_app(app)
-    app.login_manager = login_manager
+        login_manager.session_protection = 'strong'
+        login_manager.init_app(app)
+        app.login_manager = login_manager
 
-    # Initializing principal manager
-    app.principal = Principal(app)
+        # Initializing principal manager
+        app.principal = Principal(app)
 
-    app.swaggerui_blueprint = get_swaggerui_blueprint(
-        app.config.get('SWAGGER_URL'),  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
-        app.config.get('API_URL'),
-        config={  # Swagger UI config overrides
-            'app_name': "Test application"
-        },
-        # oauth_config={ # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
-        # 'clientId': "your-client-id",
-        # 'clientSecret': "your-client-secret-if-required",
-        # 'realm': "your-realms",
-        # 'appName': "your-app-name",
-        # 'scopeSeparator': " ",
-        # 'additionalQueryStringParams': {'test': "hello"}
-        # }
-    )
+        app.swaggerui_blueprint = get_swaggerui_blueprint(
+            app.config.get('SWAGGER_URL'),  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+            app.config.get('API_URL'),
+            config={  # Swagger UI config overrides
+                'app_name': "Test application"
+            },
+            # oauth_config={ # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
+            # 'clientId': "your-client-id",
+            # 'clientSecret': "your-client-secret-if-required",
+            # 'realm': "your-realms",
+            # 'appName': "your-app-name",
+            # 'scopeSeparator': " ",
+            # 'additionalQueryStringParams': {'test': "hello"}
+            # }
+        )
 
-    # Initializing Alembic
-    alembic = Alembic()
-    alembic.init_app(app)
-    app.alembic = alembic
+        # Initializing Alembic
+        alembic = Alembic()
+        alembic.init_app(app)
+        app.alembic = alembic
 
-    api = Api(app, prefix=api_prefix)
-    app.api = api
+        api = Api(app, prefix=api_prefix)
+        app.api = api
 
-    # include an api_registry to the application
-    app.api_registry = []  # a simple list holding the values to be registered
+        # include an api_registry to the application
+        app.api_registry = []  # a simple list holding the values to be registered
 
     return app
