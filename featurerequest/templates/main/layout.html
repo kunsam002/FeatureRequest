@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feature Request App | {{ title }}</title>
+    {% assets "main-global-css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css"/>
+    {% endassets %}
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('.index') }}">Featured Request App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% if request.path == url_for('.index') %}active{% endif %}"><a
+                        href="{{ url_for('.index') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="{% if request.path == url_for('.clients') %}active{% endif %}"><a
+                        href="{{ url_for('.clients') }}">Clients</a></li>
+                <li class="{% if request.path == url_for('.product_areas') %}active{% endif %}"><a
+                        href="{{ url_for('.product_areas') }}">Product Areas</a></li>
+                <li class="{% if request.path == url_for('.all_requests') %}active{% endif %}"><a
+                        href="{{ url_for('.all_requests') }}">Requests</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                    <li class="active dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="true"> <i class="fa fa-user"></i> {{ current_user.username }} <span
+                                class="sr-only">(current)</span><span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('.signup') }}">SignUp</a></li>
+                {% endif %}
+
+            </ul>
+        </div><!--/.nav-collapse -->
+        <div class="clearfix"></div>
+    </div>
+</nav>
+<div class="container page_wrapper">
+    {% block body %}
+    {% endblock body %}
+</div>
+{% assets "main-global-js" %}
+    <script src="{{ ASSET_URL }}" type="text/javascript"></script>
+{% endassets %}
+
+{% block page_js %}
+{% endblock page_js %}
+</body>
+</html>

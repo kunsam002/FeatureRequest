@@ -1,0 +1,23 @@
+{
+  "model": "Client",
+  "objects": [
+    {
+      "name": "Client A",
+      "phone": "+2348130107796",
+      "email": "clienta@mailinator.com",
+      "description": "Client A top of the Aviation Sector"
+    },
+    {
+      "name": "Client B",
+      "phone": "+2347046399814",
+      "email": "clientb@mailinator.com",
+      "description": "Client B top of the Transport Sector"
+    },
+    {
+      "name": "Client C",
+      "phone": "+2348130107796",
+      "email": "clientc@mailinator.com",
+      "description": "Client C top of the Aviation Sector"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{% extends "main/layout.html" %}
+{% block body %}
+    <div class="col-md-12">
+        <img class="center-block" src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="200px">
+        <h2 class="text-center form_title theme_title_color">Feature Request App</h2>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-4 text-center well">
+            <h1>{{ clients_count }}</h1>
+            <h4>Clients</h4>
+        </div>
+        <div class="col-md-4 text-center well">
+            <h1>{{ users_count }}</h1>
+            <h4>Users</h4>
+
+        </div>
+        <div class="col-md-4 text-center well">
+            <h1>{{ requests_count }}</h1>
+            <h4>Feature Requests</h4>
+        </div>
+    </div>
+{% endblock body %}

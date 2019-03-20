@@ -1,0 +1,44 @@
+{% extends "main/layout.html" %}
+{% block body %}
+    <div class="mv10">
+        <a href="{{ url_for('.create_request') }}" class="btn btn-md theme_btn normal_size pull-right">Create
+            Request</a>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" class="theme_title_color">#</th>
+            <th scope="col" class="theme_title_color">Title</th>
+            <th scope="col" class="theme_title_color">Description</th>
+            <th scope="col" class="theme_title_color">Client</th>
+            <th scope="col" class="theme_title_color">Priority</th>
+            <th scope="col" class="theme_title_color">Created On</th>
+            <th scope="col" class="theme_title_color">Target Date</th>
+            <th scope="col" class="theme_title_color">Project Area</th>
+            <th scope="col" class="theme_title_color"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for request in results.items %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ request.title }}</td>
+                <td>{{ request.description }}</td>
+                <td>{{ request.client.name }}</td>
+                <td>{{ request.client_priority }}</td>
+                <td>{{ request.date_created.strftime("%b %m %Y") }}</td>
+                <td>{{ request.target_date.strftime("%b %m %Y") }}</td>
+                <td>{{ request.product_area.name }}</td>
+
+                <td>{% if request.user_id==current_user.id %}<a class="btn btn-sm btn-default"
+                                                                href="{{ url_for('.update_request',id=request.id) }}">Update</a>{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock body %}
+
+
+

@@ -1,0 +1,21 @@
+{
+  "model": "ProductArea",
+  "objects": [
+    {
+      "name": "Policies",
+      "description": "Products relating policies"
+    },
+    {
+      "name": "Billing",
+      "description": "Products relating billing"
+    },
+    {
+      "name": "Claims",
+      "description": "Products relating claims"
+    },
+    {
+      "name": "Reports",
+      "description": "Products relating reports"
+    }
+  ]
+}
