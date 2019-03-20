@@ -27,6 +27,5 @@ class Config(object):
     STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__name__)), "featurerequest", "static")
 
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
-    # API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
-    API_URL = os.path.join("featurerequest", "static","swagger.json")  # Our API url (can of course be a local resource)
+    API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
 
