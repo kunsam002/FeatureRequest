@@ -18,10 +18,10 @@ FLASK_PORT = os.getenv("FLASK_PORT", "5000")
 
 # Required to map create_app function for FlaskGroup in cli
 def make_app(*args, **kwargs):
-    return create_app('featurerequest', FLASK_CONFIG, *args, **kwargs)
+    return create_app('feature_request', FLASK_CONFIG, *args, **kwargs)
 
 
-app = create_app('featurerequest', 'config.Config')
+app = create_app('feature_request', 'config.Config')
 
 logger = app.logger
 
@@ -36,9 +36,9 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def alembic(action, message=""):
     """ alembic integration using Flask-Alembic. Should provide us with more control over migrations """
-    from featurerequest import alembic as _alembic
-    import featurerequest.models
-    from featurerequest import app
+    from feature_request import alembic as _alembic
+    import feature_request.models
+    from feature_request import app
 
     if action == "migrate":
         app.logger.info("Generating migration")
@@ -70,7 +70,7 @@ def setup_app():
         alembic(action=i)
 
     with app.app_context():
-        from featurerequest import db, models, logger
+        from feature_request import db, models, logger
         from crud_factory import loader
 
         SETUP_DIR = app.config.get("SETUP_DIR")  # Should be present in config
@@ -86,12 +86,11 @@ def setup_app():
             loader.load_data(models, db, src)
 
 
-
 @manager.command
 def runserver():
     """ Start the server"""
-    from featurerequest.views.public import www
-    from featurerequest import api,swaggerui_blueprint,app
+    from feature_request.views.public import www
+    from feature_request import api, swaggerui_blueprint, app
 
     initialize_blueprints(app, www)
 
@@ -101,7 +100,6 @@ def runserver():
 
     port = int(os.environ.get('PORT', 5551))
     app.run(host='0.0.0.0', port=port)
-
 
 
 if __name__ == "__main__":

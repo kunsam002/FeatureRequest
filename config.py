@@ -23,9 +23,9 @@ class Config(object):
     SECRET_KEY = '\x91c~\xc0-\xe3\'f\xe19PxE\x93\xe8\x91`usu"\xd0\xb6\x01/\x0c\xed\\\xbd]nGtvH\x99ekw\xf8'
     SQLALCHEMY_ECHO = False
 
+    BASE_DIR = os.path.dirname(os.path.abspath(__name__))
     SETUP_DIR = os.path.join(os.path.dirname(os.path.abspath(__name__)), "setup")
-    STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__name__)), "featurerequest", "static")
+    STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__name__)), "feature_request", "static")
 
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
     API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
-
