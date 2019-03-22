@@ -11,14 +11,14 @@ from flask import Blueprint, render_template, abort, redirect, \
     flash, url_for, request, session, g, make_response, current_app, jsonify, g
 from flask_login import logout_user, login_required, login_user, current_user
 from datetime import date, datetime, timedelta
-from featurerequest.models import *
+from feature_request.models import *
 from sqlalchemy import asc, desc, or_, and_, func
-from featurerequest.forms import *
+from feature_request.forms import *
 from crud_factory import utils
-from featurerequest import login_manager
+from feature_request import app
 from flask_principal import Principal, Identity, AnonymousIdentity, identity_changed, PermissionDenied
-from featurerequest.services import *
-from featurerequest.services.authentication import authenticate
+from feature_request.services import *
+from feature_request.services.authentication import authenticate
 import base64
 import time
 import json
@@ -27,6 +27,8 @@ import random
 from pprint import pprint
 import cgi
 import hashlib
+
+login_manager = app.login_manager
 
 www = Blueprint('public', __name__)
 
@@ -233,7 +235,8 @@ def all_requests():
     title = "Feature Requests"
     request_args = utils.copy_dict(request.args, {})
 
-    query = FeatureRequest.query.join(Client).order_by(Client.name)
+    query = FeatureRequest.query.join(Client).order_by(Client.name).order_by(FeatureRequest.client_priority).order_by(
+        FeatureRequest.product_area_code)
 
     results = query.paginate(page, 100, False)
     if results.has_next:

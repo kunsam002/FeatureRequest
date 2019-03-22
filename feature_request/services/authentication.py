@@ -8,10 +8,10 @@ Authentication service for managing verifying credentials & permissions
 """
 from flask_login import current_user
 from flask_principal import identity_changed, UserNeed, RoleNeed
-from sqlalchemy import or_, func
-from featurerequest import login_manager
-from featurerequest import app
-from featurerequest.models import *
+from sqlalchemy import or_
+from feature_request.models import *
+
+login_manager = app.login_manager
 
 
 @login_manager.user_loader
@@ -60,7 +60,7 @@ def authenticate(username, password, **kwargs):
     # user_login_attempted.send(username)
 
     user = User.query.filter(or_(func.lower(User.username) == username.lower(),
-        func.lower(User.email) == username.lower())).first()
+                                 func.lower(User.email) == username.lower())).first()
     if user and user.check_password(password):
         return user
     return None
@@ -77,12 +77,12 @@ def authenticate_admin(username, password, **kwargs):
     :returns: a user object or None
     """
     # user_login_attempted.send(username)
-    print("-------username---",username)
-    print("-------password---",password)
+    print("-------username---", username)
+    print("-------password---", password)
     user = User.query.filter(or_(func.lower(User.username) == username.lower(),
-        func.lower(User.email) == username.lower())).first()
+                                 func.lower(User.email) == username.lower())).first()
 
-    print("------password check-----",user.check_password(password))
+    print("------password check-----", user.check_password(password))
     if user and user.check_password(password):
         return user
     return None
@@ -109,7 +109,8 @@ def check_basic_auth(username, auth_token, **kwargs):
     :returns: a user object or None
     """
 
-    user = User.query.filter(or_(func.lower(User.username) == username.lower(), func.lower(User.email) == username.lower())).first()
+    user = User.query.filter(
+        or_(func.lower(User.username) == username.lower(), func.lower(User.email) == username.lower())).first()
 
     if user and auth_token == user.get_auth_token():
         return user

@@ -22,7 +22,9 @@ from crud_factory.utils import slugify, id_generator, token_generator
 from socket import gethostname, gethostbyname
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from featurerequest import db, logger, bcrypt, app
+from feature_request import app
+
+db, logger, bcrypt = app.db, app.logger, app.bcrypt
 
 
 def slugify_from_name(context):
@@ -129,6 +131,7 @@ class UserMixin(AppMixin):
     @declared_attr
     def user(cls):
         return db.relationship("User", foreign_keys=cls.user_id)
+
 
 class User(AppMixin, db.Model):
     extra_fields = ["full_name", "approx_name", "name"]
@@ -251,7 +254,6 @@ class User(AppMixin, db.Model):
         return '<User %r>' % self.name
 
 
-
 class Client(AppMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -299,7 +301,8 @@ class FeatureRequest(UserMixin, db.Model):
                              foreign_keys="FeatureRequest.client_id")  # Associated client to the request being raised
 
     client_priority = db.Column(db.Integer, nullable=True)  # A numbered priority according to the client.
-    target_date = db.Column(db.DateTime, default=datetime.now())  # The date that the client is hoping to have the feature.
+    target_date = db.Column(db.DateTime,
+                            default=datetime.now())  # The date that the client is hoping to have the feature.
 
     product_area_code = db.Column(db.String(200), db.ForeignKey('product_area.code'), nullable=False)
     product_area = db.relationship("ProductArea",

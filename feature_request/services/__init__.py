@@ -1,4 +1,4 @@
-from featurerequest.models import *
+from feature_request.models import *
 from crud_factory import *
 
 ServiceFactory = CRUDFactory
@@ -16,8 +16,8 @@ class UserService(BaseUserService):
     def create(cls, **kwargs):
         """ Register a non-staff account """
 
-        password = kwargs.pop("password","")
-        
+        password = kwargs.pop("password", "")
+
         user = BaseUserService.create(**kwargs)
         user.set_password(password)
 

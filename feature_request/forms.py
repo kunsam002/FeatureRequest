@@ -1,12 +1,11 @@
 from crud_factory.auth import ValidationFailed
 from wtforms import StringField, PasswordField, BooleanField, ValidationError, SelectField, \
-    FloatField, IntegerField, widgets, Field, HiddenField, FormField, SelectMultipleField, RadioField
+    widgets, Field
 from wtforms_components import DateRange
 from flask_wtf import FlaskForm
-from wtforms.validators import Optional, DataRequired, Email, EqualTo, NumberRange
+from wtforms.validators import Optional, DataRequired, Email, EqualTo
 from wtforms.ext.dateutil.fields import DateField, DateTimeField
-from featurerequest.models import *
-from sqlalchemy import or_, func
+from feature_request.models import *
 from dateutil.relativedelta import relativedelta
 
 
@@ -87,7 +86,7 @@ class LoginForm(FlaskForm):
 
 class SignUpForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[Optional()])
     new_password = PasswordField('Password', validators=[DataRequired()])
     verify_password = PasswordField('Password', validators=[DataRequired(), EqualTo('new_password')])
@@ -99,9 +98,9 @@ class RequestForm(FlaskForm):
     client_id = SelectField('Client', validators=[DataRequired()], coerce=int)
     client_priority = SelectField('Client Priority', validators=[DataRequired()], coerce=int)
     target_date = DateTimeField('Target Date', validators=[DateRange(
-            min=datetime.today(),
-            max=datetime.today()+relativedelta(years=65)
-        )])
+        min=datetime.today(),
+        max=datetime.today() + relativedelta(years=65)
+    )])
     product_area_code = SelectField('Product Area', validators=[DataRequired()], coerce=str)
 
     def validate_client_id(self, field):
@@ -114,5 +113,5 @@ class RequestForm(FlaskForm):
 
     def validate_client_priority(self, field):
         if FeatureRequest.query.filter(FeatureRequest.client_id == self.client_id.data,
-                                       FeatureRequest.client_priority == field.data).count()>0:
+                                       FeatureRequest.client_priority == field.data).count() > 0:
             raise ValidationError("Existing Priority set for the Client. Kindly choose another priority level.")
