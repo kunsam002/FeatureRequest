@@ -87,9 +87,17 @@ class LoginForm(FlaskForm):
 class SignUpForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField('Username', validators=[Optional()])
+    username = StringField('Username', validators=[DataRequired()])
     new_password = PasswordField('Password', validators=[DataRequired()])
     verify_password = PasswordField('Password', validators=[DataRequired(), EqualTo('new_password')])
+
+    def validate_email(self, field):
+        if User.query.filter(User.email == field.data).first():
+            raise ValidationError("Email already exist.")
+
+    def validate_username(self, field):
+        if User.query.filter(User.username == field.data).first():
+            raise ValidationError("Username already exist.")
 
 
 class RequestForm(FlaskForm):
@@ -102,6 +110,12 @@ class RequestForm(FlaskForm):
         max=datetime.today() + relativedelta(years=65)
     )])
     product_area_code = SelectField('Product Area', validators=[DataRequired()], coerce=str)
+
+    def validate_title(self, field):
+        if FeatureRequest.query.filter(FeatureRequest.client_id == self.client_id.data,
+                                       FeatureRequest.title == field.data,
+                                       FeatureRequest.product_area_code == self.product_area_code.data).count() > 0:
+            raise ValidationError("Record already exist for matching Client")
 
     def validate_client_id(self, field):
         if not Client.query.get(field.data):

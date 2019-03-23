@@ -19,8 +19,6 @@ from flask_principal import Principal
 
 from flask_assets import Environment, Bundle
 
-from flask_swagger_ui import get_swaggerui_blueprint
-
 
 def initialize_blueprints(app, *blueprints):
     """Registers a set of blueprints to an application"""

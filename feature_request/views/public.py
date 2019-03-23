@@ -195,6 +195,14 @@ def index():
     users_count = User.query.count()
     requests_count = FeatureRequest.query.count()
     clients_count = Client.query.count()
+
+    is_unit_test = request.args.get("test", None)
+    if is_unit_test:
+        return app.response_class(
+            response=json.dumps(locals()),
+            status=200,
+            mimetype='application/json'
+        )
     return render_template("main/index.html", **locals())
 
 

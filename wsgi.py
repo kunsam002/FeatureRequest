@@ -1,4 +1,4 @@
-from feature_request import app
+from feature_request import *
 
 # run application
 if __name__ == '__main__':
