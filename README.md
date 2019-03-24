@@ -5,6 +5,8 @@ Feature Request App allows the user to create "feature requests" by making a req
 ## Installation
 
 Database Setup (PostgreSQL)
+
+Login to PostgreSQL console
 ```postgresql
 create database britecorerequest;
 create user postgres with encrypted password 'postgres';
@@ -47,7 +49,9 @@ Python3.6
 
 python3-pip
 
-PostgreSQL,
+virtualenv
+
+PostgreSQL
 
 Flask
 
