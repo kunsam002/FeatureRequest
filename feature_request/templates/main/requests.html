@@ -24,8 +24,8 @@
         {% for request in results.items %}
             <tr>
                 <th scope="row">{{ loop.index }}</th>
-                <td>{{ request.user.username }}</td>
                 <td>{{ request.title }}</td>
+                <td>{{ request.user.username }}</td>
                 <td>{{ request.description }}</td>
                 <td>{{ request.client.name }}</td>
                 <td>{{ request.client_priority }}</td>
@@ -35,8 +35,9 @@
 
                 <td>
                     {% if request.user_id==current_user.id %}
-                    <a class="btn btn-sm btn-default" href="{{ url_for('.update_request',id=request.id) }}">Update</a>
-                    &nbsp <a class="btn btn-sm btn-warning" href="{{ url_for('.delete_request',id=request.id) }}">Delete</a>
+                        <a class="btn btn-sm btn-default"
+                           href="{{ url_for('.update_request',id=request.id) }}">Update</a>
+                        &nbsp<a class="btn btn-sm btn-warning" href="{{ url_for('.delete_request',id=request.id) }}">Delete</a>
                     {% endif %}
                 </td>
             </tr>
