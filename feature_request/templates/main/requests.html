@@ -31,8 +31,11 @@
                 <td>{{ request.target_date.strftime("%b %m %Y") }}</td>
                 <td>{{ request.product_area.name }}</td>
 
-                <td>{% if request.user_id==current_user.id %}<a class="btn btn-sm btn-default"
-                                                                href="{{ url_for('.update_request',id=request.id) }}">Update</a>{% endif %}
+                <td>
+                    {% if request.user_id==current_user.id %}
+                    <a class="btn btn-sm btn-default" href="{{ url_for('.update_request',id=request.id) }}">Update</a>
+                    &nbsp <a class="btn btn-sm btn-warning" href="{{ url_for('.delete_request',id=request.id) }}">Delete</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

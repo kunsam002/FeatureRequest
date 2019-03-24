@@ -4,22 +4,37 @@ Feature Request App allows the user to create "feature requests" by making a req
 
 ## Installation
 
-Install requirements and dependecies 
-
-```bash
-pip install -r requirements.txt
+Database Setup (PostgreSQL)
+```postgresql
+create database britecorerequest;
+create user postgres with encrypted password 'postgres';
+grant all privileges on database britecorerequest to postgres;
 ```
 
-Setup Application by loading assets
+Install and setup application
 
 ```bash
-python manage.py setup_app
+bash install.sh
+```
+## Running UnitTest
+
+```bash
+bash run_tests.sh
+
 ```
 
-## Usage
+## Running Application
 
-```python
-python manage.py runserver
+```bash
+python -m flask run
+
+```
+
+## Access Credentials
+
+```text
+username: kunsam002
+password: 1234@Abcd
 
 ```
 
@@ -27,9 +42,18 @@ python manage.py runserver
 Pull requests are welcome. For major changes, please open an issue first or contact the developer to discuss what you would like to change.
 
 
-## Dependencies
-Python3, PostgreSQL,
-Flask, SQLAlchemy
+## Prerequisites
+Python3.6
+
+python3-pip
+
+PostgreSQL,
+
+Flask
+
+SQLAlchemy
+
+Linux OS
 
 All dependencies and requirements can be found in the requirements.txt file
 

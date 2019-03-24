@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Feature Request App | {{ title }}</title>
-    <meta name="description" content='Feature Request App allows the user to create "feature requests" by making a request for a new feature that will be added onto an existing piece of software.'>
+    <meta name="description"
+          content='Feature Request App allows the user to create "feature requests" by making a request for a new feature that will be added onto an existing piece of software.'>
     <meta name="author" content="Kunsam002- Olukunle Ogunmokun">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {% assets "main-global-css" %}
         <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css"/>
     {% endassets %}
@@ -56,6 +57,15 @@
     </div>
 </nav>
 <div class="container page_wrapper">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message_title, message in messages %}
+                    <strong>{{ message_title }}</strong> {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     {% block body %}
     {% endblock body %}
 </div>

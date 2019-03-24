@@ -1,0 +1,19 @@
+{% extends "main/layout.html" %}
+{% block body %}
+    <div class="jumbotron md">
+        <form action="{{ request.path }}" method="post">
+            {{ form.csrf_token }}
+            <div class="col-md-12">
+                <h2 class="text-center form_title theme_title_color">{{ title }}</h2>
+            </div>
+            <input type="hidden" class="hidden" id="id" name="id" value="{{ obj.id }}">
+            <div class="form-group col-md-12 text-center">
+                Are you sure you want to delete this record?. Kindly note that action is irreversible
+            </div>
+            <div class="form-group col-md-12">
+                <input class="btn btn-md theme_btn text-right" type="submit" value="Submit">
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+{% endblock body %}

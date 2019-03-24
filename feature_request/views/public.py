@@ -142,6 +142,10 @@ def login():
             session.permanent = True
 
             user.update_last_login()
+            flash_msg = "Login Successful."
+            if user.last_login_at:
+                flash_msg = flash_msg + " You last logged in at %s" % user.last_login_at.strftime("%b %m, %Y %-I:%M %p")
+            flash(flash_msg, "Welcome back")
             return resp
 
         else:
@@ -159,7 +163,6 @@ def signup():
 
     if form.validate_on_submit():
         data = form.data
-        data["password"] = data.get("new_password")
 
         user = UserService.create(**data)
 
@@ -181,6 +184,8 @@ def signup():
             resp.set_cookie("__xcred", __xcred)
             resp.set_cookie("current_user_id", value=str(user.id))
             session.permanent = True
+            flash("Signup Successful. Welcome to Feature Request App", "Welcome!")
+
             return resp
 
         else:
@@ -190,7 +195,8 @@ def signup():
 
 
 @www.route('/')
-def index():
+@www.route('/<string:path>')
+def index(path=None):
     title = "Home"
     users_count = User.query.count()
     requests_count = FeatureRequest.query.count()
@@ -302,7 +308,7 @@ def create_request():
         data = form.data
         data["user_id"] = current_user.id
         obj = FeatureRequestService.create(**data)
-
+        flash("Feature Request Created Successfully", "Created")
         return redirect(url_for('.all_requests'))
 
     return render_template("main/create_request.html", **locals())
@@ -331,7 +337,35 @@ def update_request(id):
         data = form.data
         data["user_id"] = current_user.id
         obj = FeatureRequestService.update(obj.id, **data)
-
+        flash("Featured Request Updated", "Updated")
         return redirect(url_for('.all_requests'))
 
     return render_template("main/create_request.html", **locals())
+
+
+@www.route('/requests/<int:id>/delete/', methods=['GET', 'POST'])
+@login_required
+def delete_request(id):
+    title = "Delete Feature Request"
+    next_url = request.args.get("next") or url_for(".index")
+
+    obj = FeatureRequestService.query.get(id)
+    if not obj:
+        abort(404)
+
+    if obj.user_id != current_user.id:
+        abort(404)
+
+    form = DeleteForm()
+
+    if form.validate_on_submit():
+        data = form.data
+
+        if id != data.get("id"):
+            abort(404)
+
+        obj = FeatureRequestService.delete(obj.id)
+        flash("Request has been deleted.", "Deleted")
+        return redirect(url_for('.all_requests'))
+
+    return render_template("main/delete.html", **locals())

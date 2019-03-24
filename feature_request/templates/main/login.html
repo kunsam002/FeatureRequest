@@ -31,9 +31,9 @@
             </div>
             <div class="col-md-12 text-center">
                 {% if next_url %}
-                <span>Don't Have an account? <a href="{{ url_for('.signup',next=next_url) }}">Click Here</a> to Sign Up</span>
+                    <span>Don't Have an account? <a href="{{ url_for('.signup',next=next_url) }}">Click Here</a> to Sign Up</span>
                 {% else %}
-                <span>Don't Have an account? <a href="{{ url_for('.signup') }}">Click Here</a> to Sign Up</span>
+                    <span>Don't Have an account? <a href="{{ url_for('.signup') }}">Click Here</a> to Sign Up</span>
                 {% endif %}
             </div>
             <div class="clearfix"></div>

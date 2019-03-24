@@ -12,7 +12,7 @@
                 {{ form.title(class="form-control", placeholder="Feature Request Title") }}
                 {% if form.title.errors %}
                     {% for e in form.title.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -22,7 +22,7 @@
                 {{ form.description(class="form-control", placeholder="Description") }}
                 {% if form.description.errors %}
                     {% for e in form.description.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -32,7 +32,7 @@
                 {{ form.client_id(class="form-control", placeholder="Select Client") }}
                 {% if form.client_id.errors %}
                     {% for e in form.client_id.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -42,7 +42,7 @@
                 {{ form.client_priority(class="form-control", placeholder="Specify Priority") }}
                 {% if form.client_priority.errors %}
                     {% for e in form.client_priority.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -62,7 +62,7 @@
                 {{ form.target_date(class="form-control", placeholder="Choose Target Date", type="date") }}
                 {% if form.target_date.errors %}
                     {% for e in form.target_date.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}

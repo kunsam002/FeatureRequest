@@ -1,12 +1,13 @@
 from crud_factory.auth import ValidationFailed
 from wtforms import StringField, PasswordField, BooleanField, ValidationError, SelectField, \
-    widgets, Field
+    widgets, Field, IntegerField
 from wtforms_components import DateRange
 from flask_wtf import FlaskForm
 from wtforms.validators import Optional, DataRequired, Email, EqualTo
 from wtforms.ext.dateutil.fields import DateField, DateTimeField
 from feature_request.models import *
 from dateutil.relativedelta import relativedelta
+from crud_factory.utils import secured_password
 
 
 class RequiredIf(DataRequired):
@@ -88,8 +89,8 @@ class SignUpForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
-    new_password = PasswordField('Password', validators=[DataRequired()])
-    verify_password = PasswordField('Password', validators=[DataRequired(), EqualTo('new_password')])
+    password = PasswordField('Password', validators=[DataRequired()])
+    verify_password = PasswordField('Verify Password', validators=[DataRequired(), EqualTo('password')])
 
     def validate_email(self, field):
         if User.query.filter(User.email == field.data).first():
@@ -98,6 +99,12 @@ class SignUpForm(FlaskForm):
     def validate_username(self, field):
         if User.query.filter(User.username == field.data).first():
             raise ValidationError("Username already exist.")
+
+    def validate_password(self, field):
+        if not secured_password(field.data):
+            raise ValidationError(
+                "Kindly provide a more secured password, containing at least a number,"
+                " special character, a capital and small letter, all with minimum of 8 characters")
 
 
 class RequestForm(FlaskForm):
@@ -129,3 +136,7 @@ class RequestForm(FlaskForm):
         if FeatureRequest.query.filter(FeatureRequest.client_id == self.client_id.data,
                                        FeatureRequest.client_priority == field.data).count() > 0:
             raise ValidationError("Existing Priority set for the Client. Kindly choose another priority level.")
+
+
+class DeleteForm(FlaskForm):
+    id = IntegerField(validators=[DataRequired()])

@@ -4,7 +4,7 @@
         <form action="{{ request.path }}" method="post">
             {{ form.csrf_token }}
             <div class="col-md-12">
-                <img class="center-block" src="{{url_for('static', filename='logo.png')}}" alt="Logo" width="200px">
+                <img class="center-block" src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="200px">
                 <h2 class="text-center form_title theme_title_color">Join the Team</h2>
             </div>
             <div class="form-group col-md-12">
@@ -12,7 +12,7 @@
                 {{ form.name(class="form-control", placeholder="Full Name (FirstName LastName)") }}
                 {% if form.name.errors %}
                     {% for e in form.name.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -22,7 +22,7 @@
                 {{ form.email(class="form-control", placeholder="Enter Valid Email Address") }}
                 {% if form.email.errors %}
                     {% for e in form.email.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -32,17 +32,17 @@
                 {{ form.username(class="form-control", placeholder="Enter Username") }}
                 {% if form.username.errors %}
                     {% for e in form.username.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
             </div>
             <div class="form-group col-md-6">
-                <label for="{{ form.new_password.name }}">{{ form.new_password.label.text }}</label><br>
-                {{ form.new_password(class="form-control", placeholder="Enter a secured password") }}
-                {% if form.new_password.errors %}
-                    {% for e in form.new_password.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                <label for="{{ form.password.name }}">{{ form.password.label.text }}</label><br>
+                {{ form.password(class="form-control", placeholder="Enter a secured password") }}
+                {% if form.password.errors %}
+                    {% for e in form.password.errors %}
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
@@ -52,16 +52,17 @@
                 {{ form.verify_password(class="form-control", placeholder="Confirm Password") }}
                 {% if form.verify_password.errors %}
                     {% for e in form.verify_password.errors %}
-                       <small class="text-danger">{{ e }}</small>
+                        <small class="text-danger">{{ e }}</small>
                     {% endfor %}
 
                 {% endif %}
             </div>
 
             <div class="form-group col-md-12">
-                <button class="btn btn-md theme_btn text-center" type="submit">SignUp <i class="fa fa-thumbs-up"></i></button>
+                <button class="btn btn-md theme_btn text-center" type="submit">SignUp <i class="fa fa-thumbs-up"></i>
+                </button>
             </div>
-        <div class="clearfix"></div>
+            <div class="clearfix"></div>
         </form>
     </div>
 {% endblock body %}

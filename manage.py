@@ -5,11 +5,9 @@ import os
 import flask
 from flask_migrate import Migrate, MigrateCommand
 
-from factories import create_app, initialize_blueprints
+from feature_request.factories import create_app, initialize_blueprints
 
 from flask_script import Manager, prompt, prompt_pass, prompt_bool, prompt_choices
-
-from multiprocessing import Process
 
 FLASK_CONFIG = os.getenv("FLASK_CONFIG", "config.Config")
 FLASK_HOST = os.getenv("FLASK_HOST", "0.0.0.0")
@@ -34,44 +32,19 @@ manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def alembic(action, message=""):
-    """ alembic integration using Flask-Alembic. Should provide us with more control over migrations """
-    from feature_request import alembic as _alembic
-    import feature_request.models
-    from feature_request import app
-
-    if action == "migrate":
-        app.logger.info("Generating migration")
-        _alembic.revision(message)
-        app.logger.info("Migration complete")
-
-    elif action == "upgrade":
-        app.logger.info("Executing upgrade")
-        _alembic.upgrade()
-        app.logger.info("Upgrade complete")
-
-    elif action == 'update':
-        app.logger.info("Executing upgrade")
-        _alembic.upgrade()
-        _alembic.revision("Generating migration")
-        _alembic.upgrade()
-        app.logger.info("Upgrade complete")
-
-
-@manager.command
 def setup_app():
     """ load startup data for a particular module """
     app = flask.current_app
 
     app.logger.info("Relax and Enjoy the Ride....")
-    # For Database Update
-    actions = ['upgrade', 'migrate', 'upgrade']
-    for i in actions:
-        alembic(action=i)
 
     with app.app_context():
-        from feature_request import db, models, logger
+        from feature_request import app, models
+        db, logger = app.db, app.logger
         from crud_factory import loader
+        from feature_request.services import UserService
+
+        db.create_all()
 
         SETUP_DIR = app.config.get("SETUP_DIR")  # Should be present in config
 
@@ -85,21 +58,9 @@ def setup_app():
 
             loader.load_data(models, db, src)
 
+        user_data = dict(name="Olukunle Ogunmokun",username="kunsam002",password="1234@Abcd",email="kunsam002@gmail.com")
+        UserService.create(**user_data)
 
-@manager.command
-def runserver():
-    """ Start the server"""
-    from feature_request.views.public import www
-    from feature_request import api, swaggerui_blueprint, app
-
-    initialize_blueprints(app, www)
-
-    SWAGGER_URL = app.config.get("SWAGGER_URL")
-
-    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
-
-    port = int(os.environ.get('PORT', 5551))
-    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == "__main__":
