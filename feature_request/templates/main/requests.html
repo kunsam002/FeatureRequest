@@ -10,6 +10,7 @@
         <tr>
             <th scope="col" class="theme_title_color">#</th>
             <th scope="col" class="theme_title_color">Title</th>
+            <th scope="col" class="theme_title_color">Author</th>
             <th scope="col" class="theme_title_color">Description</th>
             <th scope="col" class="theme_title_color">Client</th>
             <th scope="col" class="theme_title_color">Priority</th>
@@ -23,6 +24,7 @@
         {% for request in results.items %}
             <tr>
                 <th scope="row">{{ loop.index }}</th>
+                <td>{{ request.user.username }}</td>
                 <td>{{ request.title }}</td>
                 <td>{{ request.description }}</td>
                 <td>{{ request.client.name }}</td>
