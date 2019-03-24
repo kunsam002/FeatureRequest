@@ -1,4 +1,4 @@
-# feature_request/test_queries.py
+# feature_request/test_user.py
 
 import os
 import unittest
@@ -28,38 +28,29 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(app.debug, False)
 
 
-    ###############
-    #### tests ####
-    ###############
-
-    def test_user_query(self):
+    def test_blank_user_query(self):
         """
-        Checks User object query from DB qorks properly
+        Checks User object query from DB works properly
         """
         results = UserService.query.filter(User.username == "").all()
         self.assertEqual(results, [])
 
-    def test_clients_query(self):
+
+    def test_user_creation(self):
         """
-        Checks Client object query from DB qorks properly
+        Checks User object creation and record saves properly to the Database
         """
 
-        results = ClientService.query.filter(Client.name == "").all()
-        self.assertEqual(results, [])
+        user_data = dict(name="Test User", username="testuser28869", password="1234@Abcd",
+                         email="testuser59y62@mailinator.com")
+        UserService.create(**user_data)
 
-    def test_product_areas_query(self):
-        """
-        Checks ProductArea object query from DB qorks properly
-        """
+        self.assertEqual(UserService.query.filter(User.username=="testuser289").count(), 1)
 
-        results = ProductAreaService.query.filter(ProductArea.name == "").all()
-        self.assertEqual(results, [])
+
 
     def tearDown(self):
-        self.app = app.test_client()
-        db.drop_all()
-
-
+        pass
 
 if __name__ == "__main__":
     unittest.main()

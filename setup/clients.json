@@ -18,6 +18,24 @@
       "phone": "+2348130107796",
       "email": "clientc@mailinator.com",
       "description": "Client C top of the Aviation Sector"
+    },
+    {
+      "name": "Client D",
+      "phone": "+2348130107796",
+      "email": "clientc@mailinator.com",
+      "description": "Client D top of the Agricultural Sector"
+    },
+    {
+      "name": "Client E",
+      "phone": "+2348130107796",
+      "email": "clientc@mailinator.com",
+      "description": "Client E top of the Insurance Sector"
+    },
+    {
+      "name": "Client F",
+      "phone": "+2348130107796",
+      "email": "clientc@mailinator.com",
+      "description": "Client F top of the Banking Sector"
     }
   ]
 }

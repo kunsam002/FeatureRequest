@@ -16,6 +16,14 @@
     {
       "name": "Reports",
       "description": "Products relating reports"
+    },
+    {
+      "name": "Logistics",
+      "description": "Products relating logistics"
+    },
+    {
+      "name": "Human Resource",
+      "description": "Products relating human resource"
     }
   ]
 }

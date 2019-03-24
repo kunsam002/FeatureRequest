@@ -300,7 +300,7 @@ def create_request():
 
     form = RequestForm()
     form.client_id.choices = [(0, "--- Choose a Client ---")] + [(i.id, i.name) for i in ClientService.query.all()]
-    form.client_priority.choices = [(0, "--- Specify Request Priority ---")] + [(i, i) for i in range(1, 11)]
+    form.client_priority.choices = [(0, "--- Specify Request Priority ---")] + [(i, i) for i in range(1, 21)]
     form.product_area_code.choices = [(0, "--- Select a Product Area ---")] + [(i.code, i.name) for i in
                                                                                ProductAreaService.query.all()]
 

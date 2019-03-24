@@ -201,12 +201,6 @@ class User(AppMixin, db.Model):
         key = "%s:%s" % (self.email, self.password)
         return hashlib.sha256(key.encode()).hexdigest()
 
-    def get_token(self):
-        data = {"id": self.id, "aid": self.is_staff, "rol": self.roles}
-
-        token = jwt.encode(data)
-        return token
-
     @property
     def auth_token(self):
         "retrieve the auth token for a user within the platform"

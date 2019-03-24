@@ -2,6 +2,7 @@
 
 Feature Request App allows the user to create "feature requests" by making a request for a new feature that will be added onto an existing piece of software.
 
+Application hosted on http://18.191.173.166:5055/
 ## Installation
 
 Database Setup (PostgreSQL)
@@ -28,11 +29,11 @@ bash run_tests.sh
 ## Running Application
 
 ```bash
-python -m flask run
+python wsgi.py
 
 ```
 
-## Access Credentials
+## Default Access Credentials
 
 ```text
 username: kunsam002
@@ -45,6 +46,8 @@ Pull requests are welcome. For major changes, please open an issue first or cont
 
 
 ## Prerequisites
+Linux OS
+
 Python3.6
 
 python3-pip
@@ -57,7 +60,9 @@ Flask
 
 SQLAlchemy
 
-Linux OS
+npm
+
+less
 
 All dependencies and requirements can be found in the requirements.txt file
 

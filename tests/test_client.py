@@ -1,4 +1,4 @@
-# feature_request/test_crud.py
+# feature_request/test_client.py
 
 import os
 import unittest
@@ -27,7 +27,13 @@ class BasicTests(unittest.TestCase):
 
         self.assertEqual(app.debug, False)
 
+    def test_blank_clients_query(self):
+        """
+        Checks Client object query from DB works properly
+        """
 
+        results = ClientService.query.filter(Client.name == "").all()
+        self.assertEqual(results, [])
 
     def test_client_creation(self):
         """
@@ -56,41 +62,21 @@ class BasicTests(unittest.TestCase):
         ]
 
         for data in payload:
-            client = ClientService.create(**data)
+            ClientService.create(**data)
 
         self.assertGreaterEqual(ClientService.query.count(), 3)
 
-    def test_product_area_creation(self):
+    def test_client_query(self):
         """
-        Checks ProductArea object creation and record saves properly to the Database
+        Checks Client object query from DB works properly
         """
 
-        payload = [
-            {
-                "name": "Policies",
-                "description": "Products relating policies"
-            },
-            {
-                "name": "Billing",
-                "description": "Products relating billing"
-            },
-            {
-                "name": "Claims",
-                "description": "Products relating claims"
-            },
-            {
-                "name": "Reports",
-                "description": "Products relating reports"
-            }
-        ]
-
-        for data in payload:
-            product_area = ProductAreaService.create(**data)
-
-        self.assertGreaterEqual(ProductAreaService.query.count(), 4)
+        results = ClientService.query.filter(Client.slug == "client-a").count()
+        self.assertEqual(results, 1)
 
     def tearDown(self):
         pass
+
 
 if __name__ == "__main__":
     unittest.main()

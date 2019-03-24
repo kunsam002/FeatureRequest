@@ -132,10 +132,6 @@ class RequestForm(FlaskForm):
         if not ProductArea.query.get(field.data):
             raise ValidationError("Invalid Product Area Selected")
 
-    def validate_client_priority(self, field):
-        if FeatureRequest.query.filter(FeatureRequest.client_id == self.client_id.data,
-                                       FeatureRequest.client_priority == field.data).count() > 0:
-            raise ValidationError("Existing Priority set for the Client. Kindly choose another priority level.")
 
 
 class DeleteForm(FlaskForm):
