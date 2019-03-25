@@ -3,6 +3,28 @@
 Feature Request App allows the user to create "feature requests" by making a request for a new feature that will be added onto an existing piece of software.
 
 Application hosted on http://18.191.173.166:5055/
+
+## Prerequisites
+Linux OS
+
+Python3.6
+
+python3-pip
+
+virtualenv
+
+PostgreSQL
+
+Flask
+
+SQLAlchemy
+
+npm
+
+less
+
+All dependencies and requirements can be found in the requirements.txt file
+
 ## Installation
 
 Database Setup (PostgreSQL)
@@ -45,24 +67,4 @@ password: 1234@Abcd
 Pull requests are welcome. For major changes, please open an issue first or contact the developer to discuss what you would like to change.
 
 
-## Prerequisites
-Linux OS
-
-Python3.6
-
-python3-pip
-
-virtualenv
-
-PostgreSQL
-
-Flask
-
-SQLAlchemy
-
-npm
-
-less
-
-All dependencies and requirements can be found in the requirements.txt file
 
