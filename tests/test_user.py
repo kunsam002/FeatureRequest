@@ -34,6 +34,16 @@ class BasicTests(unittest.TestCase):
         results = UserService.query.filter(User.username == "").all()
         self.assertEqual(results, [])
 
+    def test_user_creation(self):
+        """
+        Checks User object creation and record saves properly to the Database
+        """
+
+        user_data = dict(name="Test User", username="test_user2841186890", password="1234@Abcd",
+                         email="test_user59y116682@mailinator.com")
+        UserService.create(**user_data)
+
+        self.assertEqual(UserService.query.filter(User.username == "test_user2841186890").count(), 1)
 
     def test_user_update_change(self):
         """
