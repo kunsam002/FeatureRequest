@@ -41,6 +41,9 @@ def setup_app():
     with app.app_context():
         from feature_request import app, models
         db, logger = app.db, app.logger
+
+        db.drop_all()
+
         from crud_factory import loader
         from feature_request.services import UserService
 

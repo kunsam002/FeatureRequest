@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 key = 'TluxwB3fV_GWuLkR1_BzGs1Zk90TYAuhNMZP_0q4WyM='
 
 # Oh no! The code is going over the edge! What are you going to do?
-message = b'gAAAAABckeCRsGaofOxqWUwKFbK7z9jssu58fXddPZBKNGzpqx_JHZF25E6ypot9d3q527Umw3GvgQwpFf0qg3-TCczswHxQEirzFEmBo6-KgZ1PgHZWgmvNbxovwjuZHD8aWgfiITTkvlNomSdurlFDS7P8WJWyhTcWIhTUJIz1SWNxfeWY-juPa6_-OqK_mJVQA9LlmL5j'
+message = b'gAAAAABcmMsybexKzFDi0J0kNz9zaKCahTnPtftBxh_Hvrt1nMUkxBN6yNUoPZsIVLprF3EZxOJCSclbdHRBJ4IEpo2jCeaVMxULaZDU_yrHlTKgWDdum18kELzCxSEq-N5wvA9Qen9H3-P2X1Y1tevEClMgUdXKWhikWv_Rsu2EPqh6ePylWLaABIRApFhrnB_Mh2hGFQiP'
 
 
 def main():
@@ -11,5 +11,5 @@ def main():
     print(f.decrypt(message))
 
 
-if __name__ != "__main__":
+if __name__ == "__main__":
     main()
