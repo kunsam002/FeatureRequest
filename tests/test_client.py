@@ -58,6 +58,12 @@ class BasicTests(unittest.TestCase):
                 "phone": "+2348130107796",
                 "email": "clientc@mailinator.com",
                 "description": "Client C top of the Aviation Sector"
+            },
+            {
+                "name": "Client Z",
+                "phone": "+2348130107796",
+                "email": "clientz@mailinator.com",
+                "description": "Client Z top of the Aviation Sector"
             }
         ]
 
@@ -72,7 +78,52 @@ class BasicTests(unittest.TestCase):
         """
 
         results = ClientService.query.filter(Client.slug == "client-a").count()
-        self.assertEqual(results, 1)
+        self.assertGreaterEqual(results, 1)
+
+    def test_client_update_change(self):
+        """
+        Tests Client Update method works properly
+        """
+
+        client = ClientService.query.filter(Client.slug == "client-a").first()
+        new_email = "newly_updated_client_email@britecore.com"
+
+        client = ClientService.update(client.id, email=new_email)
+
+        self.assertEqual(client.email, new_email)
+
+    def test_client_update(self):
+        """
+        Tests Client Update method works properly
+        """
+
+        client = ClientService.query.filter(Client.slug == "client-a").first()
+        initial_email = client.email
+        new_email = "newly_updated_testiniclient_email@britecore.com.ng"
+
+        client = ClientService.update(client.id, email=new_email)
+
+        self.assertNotEqual(client.email, initial_email)
+
+    def test_client_delete(self):
+        """
+        Tests Client delete
+        """
+
+        data = {
+            "name": "Client Z",
+            "phone": "+2348130107796",
+            "email": "clientz@mailinator.com",
+            "description": "Client Z top of the Aviation Sector"
+        }
+
+        client = ClientService.create(**data)
+
+        ClientService.delete(client.id)
+
+        result = ClientService.query.filter(Client.slug == "client-z").count()
+
+        self.assertEqual(result, 0)
 
     def tearDown(self):
         pass

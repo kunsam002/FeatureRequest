@@ -57,6 +57,71 @@ class BasicTests(unittest.TestCase):
 
         self.assertGreaterEqual(FeatureRequestService.query.count(), 1)
 
+    def test_request_update_change(self):
+        """
+        Tests Feature Request Update method works properly
+        """
+        data = {
+            "title": "QA Review",
+            "description": "There is a need for QA review on the Billing section of the product",
+            "client_id": 1,
+            "client_priority": 4,
+            "target_date": datetime.today() + timedelta(hours=78),
+            "product_area_code": "billing",
+            "user_id": 1
+        }
+        obj = FeatureRequestService.create(**data)
+        new_priority = 100
+
+        obj = FeatureRequestService.update(obj.id, client_priority=new_priority)
+
+        self.assertEqual(obj.client_priority, new_priority)
+
+    def test_request_update(self):
+        """
+        Tests Feature Request Update method works properly
+        """
+
+        data = {
+            "title": "QA Review",
+            "description": "There is a need for QA review on the Billing section of the product",
+            "client_id": 1,
+            "client_priority": 4,
+            "target_date": datetime.today() + timedelta(hours=78),
+            "product_area_code": "billing",
+            "user_id": 1
+        }
+        obj = FeatureRequestService.create(**data)
+        new_priority = 180
+        initial_priority = obj.client_priority
+
+        obj = FeatureRequestService.update(obj.id, client_priority=new_priority)
+
+        self.assertNotEqual(obj.client_priority, initial_priority)
+
+    def test_request_delete(self):
+        """
+        Tests Client delete
+        """
+
+        data = {
+            "title": "QA Review",
+            "description": "There is a need for QA review on the Billing section of the product",
+            "client_id": 1,
+            "client_priority": 4,
+            "target_date": datetime.today() + timedelta(hours=78),
+            "product_area_code": "billing",
+            "user_id": 1
+        }
+        obj = FeatureRequestService.create(**data)
+
+        obj_id = obj.id
+
+        FeatureRequestService.delete(obj_id)
+
+        result = FeatureRequestService.query.filter(FeatureRequest.id == obj_id).count()
+
+        self.assertEqual(result, 0)
 
     def tearDown(self):
         pass

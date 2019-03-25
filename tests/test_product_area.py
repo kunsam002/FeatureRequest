@@ -46,7 +46,7 @@ class BasicTests(unittest.TestCase):
                 "description": "Products relating policies"
             },
             {
-                "name": "works",
+                "name": "Works",
                 "description": "Products relating works"
             },
             {
@@ -56,6 +56,10 @@ class BasicTests(unittest.TestCase):
             {
                 "name": "Reports",
                 "description": "Products relating reports"
+            },
+            {
+                "name": "Logistics",
+                "description": "Products relating logistics"
             }
         ]
 
@@ -71,6 +75,59 @@ class BasicTests(unittest.TestCase):
 
         results = ProductAreaService.query.filter(ProductArea.code == "works").count()
         self.assertEqual(results, 1)
+
+    def test_product_area_change(self):
+        """
+        Tests Product Area Update method works properly
+        """
+
+        data = {
+            "name": "Logistics",
+            "description": "Products relating logistics"
+        }
+
+        product = ProductAreaService.create(**data)
+        new_description = "All Of Logistics"
+
+        product = ProductAreaService.update(product.code, description=new_description)
+
+        self.assertEqual(product.description, new_description)
+
+    def test_product_area_update(self):
+        """
+        Tests Product Area Update method works properly
+        """
+
+        data = {
+            "name": "Logistics",
+            "description": "Products relating logistics"
+        }
+
+        product = ProductAreaService.create(**data)
+        initial_description = product.description
+        new_description = "All Britecore related logistics"
+
+        product = ProductAreaService.update(product.code, description=new_description)
+
+        self.assertNotEqual(product.description, initial_description)
+
+    def test_product_area_delete(self):
+        """
+        Tests Product Area delete
+        """
+
+        data = {
+            "name": "Testing",
+            "description": "Products relating testing"
+        }
+
+        product = ProductAreaService.create(**data)
+
+        ProductAreaService.delete(product.code)
+
+        result = ProductAreaService.query.filter(ProductArea.code == "testing").count()
+
+        self.assertEqual(result, 0)
 
     def tearDown(self):
         pass

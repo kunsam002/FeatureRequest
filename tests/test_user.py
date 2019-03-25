@@ -27,7 +27,6 @@ class BasicTests(unittest.TestCase):
 
         self.assertEqual(app.debug, False)
 
-
     def test_blank_user_query(self):
         """
         Checks User object query from DB works properly
@@ -36,21 +35,55 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(results, [])
 
 
-    def test_user_creation(self):
+    def test_user_update_change(self):
         """
-        Checks User object creation and record saves properly to the Database
+        Tests User Update method works properly
+        """
+        user = UserService.query.filter(User.username == "test_user2841186890").first()
+        if not user:
+            user_data = dict(name="Test User", username="test_user2841186890", password="1234@Abcd",
+                             email="test_user59y116682@mailinator.com")
+            user = UserService.create(**user_data)
+        new_name = "User Name"
+
+        user = UserService.update(user.id, name=new_name)
+
+        self.assertEqual(user.name, new_name)
+
+    def test_user_update(self):
+        """
+        Tests User Update method works properly
         """
 
-        user_data = dict(name="Test User", username="testuser28869", password="1234@Abcd",
-                         email="testuser59y62@mailinator.com")
-        UserService.create(**user_data)
+        user = UserService.query.filter(User.username == "test_user2841186890").first()
+        if not user:
+            user_data = dict(name="Test User", username="test_user2841186890", password="1234@Abcd",
+                             email="test_user59y116682@mailinator.com")
+            user = UserService.create(**user_data)
 
-        self.assertEqual(UserService.query.filter(User.username=="testuser289").count(), 1)
+        initial_name = user.name
+        new_name = "New Name"
 
+        user = UserService.update(user.id, name=new_name)
 
+        self.assertNotEqual(user.name, initial_name)
+
+    def test_user_delete(self):
+        """
+        Tests User delete
+        """
+
+        user = UserService.query.filter(User.username == "test_user2841186890").first()
+
+        UserService.delete(user.id)
+
+        result = UserService.query.filter(User.username == "test_user2841186890").count()
+
+        self.assertEqual(result, 0)
 
     def tearDown(self):
         pass
+
 
 if __name__ == "__main__":
     unittest.main()
