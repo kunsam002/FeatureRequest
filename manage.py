@@ -61,7 +61,9 @@ def setup_app():
 
             loader.load_data(models, db, src)
 
-        user_data = dict(name="Olukunle Ogunmokun",username="kunsam002",password="1234@Abcd",email="kunsam002@gmail.com")
+        user_data = dict(
+            name="Olukunle Ogunmokun",username="kunsam002",password="1234@Abcd",email="kunsam002@gmail.com"
+        )
         UserService.create(**user_data)
 
 

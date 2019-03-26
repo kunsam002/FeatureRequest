@@ -77,12 +77,9 @@ def authenticate_admin(username, password, **kwargs):
     :returns: a user object or None
     """
     # user_login_attempted.send(username)
-    print("-------username---", username)
-    print("-------password---", password)
     user = User.query.filter(or_(func.lower(User.username) == username.lower(),
                                  func.lower(User.email) == username.lower())).first()
 
-    print("------password check-----", user.check_password(password))
     if user and user.check_password(password):
         return user
     return None
