@@ -3,7 +3,7 @@
 Feature Request App allows the user to create "feature requests" by making a request for a new feature that will be
  added onto an existing piece of software.
 
-Application hosted on http://18.191.173.166:5055/
+Application hosted on http://104.248.94.181:5055/
 
 ## Prerequisites
 Ubuntu OS
