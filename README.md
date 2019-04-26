@@ -75,7 +75,7 @@ The Feature Request App allows users create feature requests with respect to cli
 
 The following were measures taken around application workflow;
 
-* As a form of security, only registered users can create feature requests.
+* As a form of security, only registered users can create feature requests..
 * User is expected to register and login with a secured password combination.
 * Logged-In user can create feature request associated with a client and product area.
 * Only a Feature request author has the right to make modifications to created feature requests.
