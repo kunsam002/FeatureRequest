@@ -2,7 +2,7 @@
 authentication.py
 
 @Author: Olukunle Ogunmokun
-@Date: 11th Oct, 2018
+@Date: April 2019
 
 Authentication service for managing verifying credentials & permissions
 """
@@ -85,7 +85,7 @@ def authenticate_admin(username, password, **kwargs):
     return None
 
 
-def require_basic_auth(realm="Visionscape API"):
+def require_basic_auth(realm="FeatureRequest API"):
     """ Sends a 401 Authorization required response that enables basic auth """
 
     message = "Could not authorize your request. Provide the proper login credentials to continue."
